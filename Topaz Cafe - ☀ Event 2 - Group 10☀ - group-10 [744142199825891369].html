@@ -1,0 +1,2306 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Topaz Cafe - group-10</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+
+    <style>
+        /* General */
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-300.woff);
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-400.woff);
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-500.woff);
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-600.woff);
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-700.woff);
+    font-weight: 700;
+}
+
+body {
+    font-family: "Whitney", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 17px;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+img {
+    object-fit: contain;
+}
+
+.markdown {
+    max-width: 100%;
+    white-space: pre-wrap;
+    line-height: 1.3;
+    overflow-wrap: break-word;
+}
+
+.spoiler {
+    width: fit-content;
+}
+
+.spoiler--hidden {
+    cursor: pointer;
+}
+
+.spoiler-text {
+    border-radius: 3px;
+}
+
+.spoiler--hidden .spoiler-text {
+    color: rgba(0, 0, 0, 0);
+}
+
+.spoiler--hidden .spoiler-text::selection {
+    color: rgba(0, 0, 0, 0);
+}
+
+.spoiler-image {
+    position: relative;
+    overflow: hidden;
+    border-radius: 3px;
+}
+
+.spoiler--hidden .spoiler-image {
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.spoiler--hidden .spoiler-image img {
+    filter: blur(44px);
+}
+
+.spoiler--hidden .spoiler-image:after {
+    content: "SPOILER";
+    color: #dcddde;
+    background-color: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: 600;
+    padding: 0.5em 0.7em;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+    font-size: 0.9em;
+}
+
+.spoiler--hidden:hover .spoiler-image:after {
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.quote {
+    margin: 0.1em 0;
+    padding-left: 0.6em;
+    border-left: 4px solid;
+    border-radius: 3px;
+}
+
+.pre {
+    font-family: "Consolas", "Courier New", Courier, monospace;
+}
+
+.pre--multiline {
+    margin-top: 0.25em;
+    padding: 0.5em;
+    border: 2px solid;
+    border-radius: 5px;
+}
+
+.pre--inline {
+    padding: 2px;
+    border-radius: 3px;
+    font-size: 0.85em;
+}
+
+.mention {
+    border-radius: 3px;
+    padding: 0 2px;
+    color: #7289da;
+    background: rgba(114, 137, 218, .1);
+    font-weight: 500;
+}
+
+.emoji {
+    width: 1.25em;
+    height: 1.25em;
+    margin: 0 0.06em;
+    vertical-align: -0.4em;
+}
+
+.emoji--small {
+    width: 1em;
+    height: 1em;
+}
+
+.emoji--large {
+    width: 2.8em;
+    height: 2.8em;
+}
+
+/* Preamble */
+
+.preamble {
+    display: grid;
+    margin: 0 0.3em 0.6em 0.3em;
+    max-width: 100%;
+    grid-template-columns: auto 1fr;
+}
+
+.preamble__guild-icon-container {
+    grid-column: 1;
+}
+
+.preamble__guild-icon {
+    max-width: 88px;
+    max-height: 88px;
+}
+
+.preamble__entries-container {
+    grid-column: 2;
+    margin-left: 0.6em;
+}
+
+.preamble__entry {
+    font-size: 1.4em;
+}
+
+.preamble__entry--small {
+    font-size: 1em;
+}
+
+/* Chatlog */
+
+.chatlog {
+    max-width: 100%;
+}
+
+.chatlog__message-group {
+    display: grid;
+    margin: 0 0.6em;
+    padding: 0.9em 0;
+    border-top: 1px solid;
+    grid-template-columns: auto 1fr;
+}
+
+.chatlog__author-avatar-container {
+    grid-column: 1;
+    width: 40px;
+    height: 40px;
+}
+
+.chatlog__author-avatar {
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+}
+
+.chatlog__messages {
+    grid-column: 2;
+    margin-left: 1.2em;
+    min-width: 50%;
+}
+
+.chatlog__author-name {
+    font-weight: 500;
+}
+
+.chatlog__timestamp {
+    margin-left: 0.3em;
+    font-size: 0.75em;
+}
+
+.chatlog__message {
+    padding: 0.1em 0.3em;
+    margin: 0 -0.3em;
+    background-color: transparent;
+    transition: background-color 1s ease;
+}
+
+.chatlog__content {
+    font-size: 0.95em;
+    word-wrap: break-word;
+}
+
+.chatlog__edited-timestamp {
+    margin-left: 0.15em;
+    font-size: 0.8em;
+}
+
+.chatlog__attachment {
+    margin-top: 0.3em;
+}
+
+.chatlog__attachment-thumbnail {
+    vertical-align: top;
+    max-width: 45vw;
+    max-height: 500px;
+    border-radius: 3px;
+}
+
+.chatlog__embed {
+    display: flex;
+    margin-top: 0.3em;
+    max-width: 520px;
+}
+
+.chatlog__embed-color-pill {
+    flex-shrink: 0;
+    width: 0.25em;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.chatlog__embed-content-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5em 0.6em;
+    border: 1px solid;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.chatlog__embed-content {
+    display: flex;
+    width: 100%;
+}
+
+.chatlog__embed-text {
+    flex: 1;
+}
+
+.chatlog__embed-author {
+    display: flex;
+    margin-bottom: 0.3em;
+    align-items: center;
+}
+
+.chatlog__embed-author-icon {
+    margin-right: 0.5em;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.chatlog__embed-author-name {
+    font-size: 0.875em;
+    font-weight: 600;
+}
+
+.chatlog__embed-title {
+    margin-bottom: 0.2em;
+    font-size: 0.875em;
+    font-weight: 600;
+}
+
+.chatlog__embed-description {
+    font-weight: 500;
+    font-size: 0.85em;
+}
+
+.chatlog__embed-fields {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.chatlog__embed-field {
+    flex: 0;
+    min-width: 100%;
+    max-width: 506px;
+    padding-top: 0.6em;
+    font-size: 0.875em;
+}
+
+.chatlog__embed-field--inline {
+    flex: 1;
+    flex-basis: auto;
+    min-width: 150px;
+}
+
+.chatlog__embed-field-name {
+    margin-bottom: 0.2em;
+    font-weight: 600;
+}
+
+.chatlog__embed-field-value {
+    font-weight: 500;
+}
+
+.chatlog__embed-thumbnail {
+    flex: 0;
+    margin-left: 1.2em;
+    max-width: 80px;
+    max-height: 80px;
+    border-radius: 3px;
+}
+
+.chatlog__embed-image-container {
+    margin-top: 0.6em;
+}
+
+.chatlog__embed-image {
+    max-width: 500px;
+    max-height: 400px;
+    border-radius: 3px;
+}
+
+.chatlog__embed-footer {
+    margin-top: 0.6em;
+}
+
+.chatlog__embed-footer-icon {
+    margin-right: 0.2em;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+.chatlog__embed-footer-text {
+    font-size: 0.75em;
+    font-weight: 500;
+}
+
+.chatlog__reactions {
+    display: flex;
+}
+
+.chatlog__reaction {
+    display: flex;
+    align-items: center;
+    margin: 0.35em 0.1em 0.1em 0.1em;
+    padding: 0.2em 0.35em;
+    border-radius: 3px;
+}
+
+.chatlog__reaction-count {
+    min-width: 9px;
+    margin-left: 0.35em;
+    font-size: 0.875em;
+}
+
+.chatlog__bot-tag {
+    position: relative;
+    top: -.2em;
+    margin-left: 0.3em;
+    padding: 0.05em 0.3em;
+    border-radius: 3px;
+    vertical-align: middle;
+    line-height: 1.3;
+    background: #7289da;
+    color: #ffffff;
+    font-size: 0.625em;
+    font-weight: 500;
+}
+
+/* Postamble */
+
+.postamble {
+    margin: 1.4em 0.3em 0.6em 0.3em;
+    padding: 1em;
+    border-top: 1px solid;
+}
+    </style>
+    <style>
+        /* General */
+
+body {
+    background-color: #36393e;
+    color: #dcddde;
+}
+
+a {
+    color: #0096cf;
+}
+
+.spoiler-text {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.spoiler--hidden .spoiler-text {
+    background-color: #202225;
+}
+
+.spoiler--hidden:hover .spoiler-text {
+    background-color: rgba(32, 34, 37, 0.8);
+}
+
+.quote {
+    border-color: #4f545c;
+}
+
+.pre {
+    background-color: #2f3136 !important;
+}
+
+.pre--multiline {
+    border-color: #282b30 !important;
+    color: #b9bbbe !important;
+}
+
+/* === Preamble === */
+
+.preamble__entry {
+    color: #ffffff;
+}
+
+/* Chatlog */
+
+.chatlog__message-group {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.chatlog__author-name {
+    color: #ffffff;
+}
+
+.chatlog__timestamp {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.chatlog__message--highlighted {
+    background-color: rgba(114, 137, 218, 0.2) !important;
+}
+
+.chatlog__message--pinned {
+    background-color: rgba(249, 168, 37, 0.05);
+}
+
+.chatlog__edited-timestamp {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.chatlog__embed-color-pill--default {
+    background-color: rgba(79, 84, 92, 1);
+}
+
+.chatlog__embed-content-container {
+    background-color: rgba(46, 48, 54, 0.3);
+    border-color: rgba(46, 48, 54, 0.6);
+}
+
+.chatlog__embed-author-name {
+    color: #ffffff;
+}
+
+.chatlog__embed-author-name-link {
+    color: #ffffff;
+}
+
+.chatlog__embed-title {
+    color: #ffffff;
+}
+
+.chatlog__embed-description {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.chatlog__embed-field-name {
+    color: #ffffff;
+}
+
+.chatlog__embed-field-value {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.chatlog__embed-footer {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.chatlog__reaction {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.chatlog__reaction-count {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* Postamble */
+
+.postamble {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.postamble__entry {
+    color: #ffffff;
+}
+    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/solarized-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.pre--multiline').forEach(block => hljs.highlightBlock(block));
+        });
+    </script>
+
+    <script>
+        function scrollToMessage(event, id) {
+            var element = document.getElementById('message-' + id);
+
+            if (element) {
+                event.preventDefault();
+
+                element.classList.add('chatlog__message--highlighted');
+
+                window.scrollTo({
+                    top: element.getBoundingClientRect().top - document.body.getBoundingClientRect().top - (window.innerHeight / 2),
+                    behavior: 'smooth'
+                });
+
+                window.setTimeout(function() {
+                    element.classList.remove('chatlog__message--highlighted');
+                }, 2000);
+            }
+        }
+
+        function showSpoiler(event, element) {
+            if (element && element.classList.contains('spoiler--hidden')) {
+                event.preventDefault();
+                element.classList.remove('spoiler--hidden');
+            }
+        }
+    </script>
+</head>
+<body>
+
+<div class="preamble">
+    <div class="preamble__guild-icon-container">
+        <img class="preamble__guild-icon" src="https://cdn.discordapp.com/icons/713508707731898398/9df75c4a9b3c63b29d839dc2f0a1209a.png" alt="Guild icon">
+    </div>
+    <div class="preamble__entries-container">
+        <div class="preamble__entry">Topaz Cafe</div>
+        <div class="preamble__entry">☀ Event 2 - Group 10☀ / group-10</div>
+
+
+    </div>
+</div>
+
+<div class="chatlog">
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/68089440983068672/a276f475c3b5040883a2417e9354e51c.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Yuli#3011" data-user-id="68089440983068672" style="color: rgb(233,30,99)">King Arthyuri</span>
+
+
+        <span class="chatlog__timestamp">15-Aug-20 04:55 AM</span>
+
+            <div class="chatlog__message chatlog__message--pinned" data-message-id="744162339636379739" id="message-744162339636379739">
+                <div class="chatlog__content">
+                    <div class="markdown">This channel is dedicated to 
+Dom, Glass, Kelly vs. Tyche, Aimi, Rashan
+
+Tag order:
+<span class="mention" title="Kinji#9323">@Kinji</span> <span class="mention" title="Uovo#4576">@xXxMistressAixXx ✌&#127859;</span> <span class="mention" title="yokaiy#9621">@Yōkai(y)</span> <span class="mention" title="Mintfoxmimi#1012">@HolyEXCALIMINTCup</span> <span class="mention" title="RinLockhart#5930">@RinLockhart</span> <span class="mention" title="io#7619">@Lanceliot</span> 
+
+<strong>STATS</strong>: </div>
+                </div>
+
+                    <div class="chatlog__attachment">
+                            <a href="https://cdn.discordapp.com/attachments/744142199825891369/744162339233988618/34f189a19a24732ee35f142a4466688a.png">
+                                    <img class="chatlog__attachment-thumbnail" src="https://cdn.discordapp.com/attachments/744142199825891369/744162339233988618/34f189a19a24732ee35f142a4466688a.png" alt="Attachment">
+                            </a>
+                    </div>
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="744163364183474286" id="message-744163364183474286">
+                <div class="chatlog__content">
+                    <div class="markdown">Pinned a message. </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/162546384887742465/d780a2a26924d8f9b5a65f07465c97d9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Kinji#9323" data-user-id="162546384887742465" style="color: rgb(233,30,99)">Kinji</span>
+
+
+        <span class="chatlog__timestamp">15-Aug-20 08:49 AM</span>
+
+            <div class="chatlog__message " data-message-id="744221279267323994" id="message-744221279267323994">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+                    <div class="chatlog__attachment">
+                            <a href="https://cdn.discordapp.com/attachments/744142199825891369/744221279049089044/001.png">
+                                    <img class="chatlog__attachment-thumbnail" src="https://cdn.discordapp.com/attachments/744142199825891369/744221279049089044/001.png" alt="Attachment">
+                            </a>
+                    </div>
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="cackle" title="cackle" src="https://cdn.discordapp.com/emojis/717966863736504361.png">
+                                <span class="chatlog__reaction-count">12</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="uwucry" title="uwucry" src="https://cdn.discordapp.com/emojis/716922719706546266.png">
+                                <span class="chatlog__reaction-count">11</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="&#128557;" title="&#128557;" src="https://twemoji.maxcdn.com/2/72x72/1f62d.png">
+                                <span class="chatlog__reaction-count">10</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/218328871731200000/456d9ebd244fcfb0e6066230fa1fe61d.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mintfoxmimi#1012" data-user-id="218328871731200000" style="color: rgb(233,30,99)">HolyEXCALIMINTCup</span>
+
+
+        <span class="chatlog__timestamp">15-Aug-20 11:57 AM</span>
+
+            <div class="chatlog__message " data-message-id="744268587476451389" id="message-744268587476451389">
+                <div class="chatlog__content">
+                    <div class="markdown">----------------------------------
+(( text reminder ;w;!  <em>this is action line (this is inner thought) </em> ))
+=Before the start =
+<strong>Dom</strong> : AW YEAH!! dodge ball time!  - Glass and......Kelly yeah? <em>looks down at them (wait...Glass..? hm... this gonna be fun to see)</em>     lets have a fun match - BRING IT ON!!!
+<em>right as he yells that - the whistle blows the start sound , and Tyche --  </em>
+---------------------------------- <span class="chatlog__edited-timestamp" title="15-Aug-20 11:58 AM">(edited)</span></div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/162546384887742465/d780a2a26924d8f9b5a65f07465c97d9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Kinji#9323" data-user-id="162546384887742465" style="color: rgb(233,30,99)">Kinji</span>
+
+
+        <span class="chatlog__timestamp">15-Aug-20 12:44 PM</span>
+
+            <div class="chatlog__message " data-message-id="744280253224059000" id="message-744280253224059000">
+                <div class="chatlog__content">
+                    <div class="markdown">-----------------------------------------------
+Due to this panic and peer pressure with his teammates Tyche immediately hit the ball  aimlessly as soon he heard the whistle (d20+3),  the ball flew towards to Dom while he was in a middle of conversation with his teammates-- 
+--------------------------------------------------- </div>
+                </div>
+
+                    <div class="chatlog__attachment">
+                            <a href="https://cdn.discordapp.com/attachments/744142199825891369/744280252875931709/002.png">
+                                    <img class="chatlog__attachment-thumbnail" src="https://cdn.discordapp.com/attachments/744142199825891369/744280252875931709/002.png" alt="Attachment">
+                            </a>
+                    </div>
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="cackle" title="cackle" src="https://cdn.discordapp.com/emojis/717966863736504361.png">
+                                <span class="chatlog__reaction-count">13</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/218328871731200000/456d9ebd244fcfb0e6066230fa1fe61d.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mintfoxmimi#1012" data-user-id="218328871731200000" style="color: rgb(233,30,99)">HolyEXCALIMINTCup</span>
+
+
+        <span class="chatlog__timestamp">15-Aug-20 02:53 PM</span>
+
+            <div class="chatlog__message " data-message-id="744312784547872828" id="message-744312784547872828">
+                <div class="chatlog__content">
+                    <div class="markdown">-----------------------------------------------
+Doms excitement prob took over his general awareness (DEX 9+1 ) and failed to catch the ball ....welll....he catch the ball with his face tho.......
+--------------------------------------------------- <span class="chatlog__edited-timestamp" title="15-Aug-20 02:54 PM">(edited)</span></div>
+                </div>
+
+                    <div class="chatlog__attachment">
+                            <a href="https://cdn.discordapp.com/attachments/744142199825891369/744312784354803842/PG_TG_EVENT_2_GROUP_10_DODGE_BALL.png">
+                                    <img class="chatlog__attachment-thumbnail" src="https://cdn.discordapp.com/attachments/744142199825891369/744312784354803842/PG_TG_EVENT_2_GROUP_10_DODGE_BALL.png" alt="Attachment">
+                            </a>
+                    </div>
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="cackle" title="cackle" src="https://cdn.discordapp.com/emojis/717966863736504361.png">
+                                <span class="chatlog__reaction-count">17</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="fwend" title="fwend" src="https://cdn.discordapp.com/emojis/716922719731449877.png">
+                                <span class="chatlog__reaction-count">3</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="&#128149;" title="&#128149;" src="https://twemoji.maxcdn.com/2/72x72/1f495.png">
+                                <span class="chatlog__reaction-count">3</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="&#128557;" title="&#128557;" src="https://twemoji.maxcdn.com/2/72x72/1f62d.png">
+                                <span class="chatlog__reaction-count">1</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/231522256763879424/f2fdb896df2c1adb3270c61f619a2932.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Uovo#4576" data-user-id="231522256763879424" style="color: rgb(52,152,219)">xXxMistressAixXx ✌&#127859;</span>
+
+
+        <span class="chatlog__timestamp">15-Aug-20 04:40 PM</span>
+
+            <div class="chatlog__message " data-message-id="744339762386698371" id="message-744339762386698371">
+                <div class="chatlog__content">
+                    <div class="markdown">pathetic </div>
+                </div>
+
+                    <div class="chatlog__attachment">
+                            <a href="https://cdn.discordapp.com/attachments/744142199825891369/744339762219057182/unknown.png">
+                                    <img class="chatlog__attachment-thumbnail" src="https://cdn.discordapp.com/attachments/744142199825891369/744339762219057182/unknown.png" alt="Attachment">
+                            </a>
+                    </div>
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="cackle" title="cackle" src="https://cdn.discordapp.com/emojis/717966863736504361.png">
+                                <span class="chatlog__reaction-count">4</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="uwucry" title="uwucry" src="https://cdn.discordapp.com/emojis/716922719706546266.png">
+                                <span class="chatlog__reaction-count">4</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/281304462079950849/e0f46a07edd6794a6fa7db407ce25670.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="yokaiy#9621" data-user-id="281304462079950849" style="color: rgb(233,30,99)">Yōkai(y)</span>
+
+
+        <span class="chatlog__timestamp">15-Aug-20 05:31 PM</span>
+
+            <div class="chatlog__message " data-message-id="744352646927745027" id="message-744352646927745027">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+                    <div class="chatlog__attachment">
+                            <a href="https://cdn.discordapp.com/attachments/744142199825891369/744352646667960440/VB1.png">
+                                    <img class="chatlog__attachment-thumbnail" src="https://cdn.discordapp.com/attachments/744142199825891369/744352646667960440/VB1.png" alt="Attachment">
+                            </a>
+                    </div>
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="744352649696247909" id="message-744352649696247909">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+                    <div class="chatlog__attachment">
+                            <a href="https://cdn.discordapp.com/attachments/744142199825891369/744352649633071244/VB2.png">
+                                    <img class="chatlog__attachment-thumbnail" src="https://cdn.discordapp.com/attachments/744142199825891369/744352649633071244/VB2.png" alt="Attachment">
+                            </a>
+                    </div>
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="744352654490206369" id="message-744352654490206369">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+                    <div class="chatlog__attachment">
+                            <a href="https://cdn.discordapp.com/attachments/744142199825891369/744352654326628355/VB3.png">
+                                    <img class="chatlog__attachment-thumbnail" src="https://cdn.discordapp.com/attachments/744142199825891369/744352654326628355/VB3.png" alt="Attachment">
+                            </a>
+                    </div>
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="744352658462212187" id="message-744352658462212187">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+                    <div class="chatlog__attachment">
+                            <a href="https://cdn.discordapp.com/attachments/744142199825891369/744352658629984326/VB4.png">
+                                    <img class="chatlog__attachment-thumbnail" src="https://cdn.discordapp.com/attachments/744142199825891369/744352658629984326/VB4.png" alt="Attachment">
+                            </a>
+                    </div>
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="cackle" title="cackle" src="https://cdn.discordapp.com/emojis/717966863736504361.png">
+                                <span class="chatlog__reaction-count">16</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="&#128557;" title="&#128557;" src="https://twemoji.maxcdn.com/2/72x72/1f62d.png">
+                                <span class="chatlog__reaction-count">13</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="&#128149;" title="&#128149;" src="https://twemoji.maxcdn.com/2/72x72/1f495.png">
+                                <span class="chatlog__reaction-count">3</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/717906027600674838/fd92e1ae7bfb3cd728b3799fe04178b9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="aswling#7636" data-user-id="717906027600674838" style="color: rgb(233,30,99)">alex</span>
+
+
+        <span class="chatlog__timestamp">15-Aug-20 07:01 PM</span>
+
+            <div class="chatlog__message " data-message-id="744375348560396411" id="message-744375348560396411">
+                <div class="chatlog__content">
+                    <div class="markdown">((in before kelly smacks someone <img class="emoji " alt="uwucry" title="uwucry" src="https://cdn.discordapp.com/emojis/716922719706546266.png"> )) </div>
+                </div>
+
+                    <div class="chatlog__attachment">
+                            <a href="https://cdn.discordapp.com/attachments/744142199825891369/744375348736688168/20200815.png">
+                                    <img class="chatlog__attachment-thumbnail" src="https://cdn.discordapp.com/attachments/744142199825891369/744375348736688168/20200815.png" alt="Attachment">
+                            </a>
+                    </div>
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="cackle" title="cackle" src="https://cdn.discordapp.com/emojis/717966863736504361.png">
+                                <span class="chatlog__reaction-count">16</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="fwend" title="fwend" src="https://cdn.discordapp.com/emojis/716922719731449877.png">
+                                <span class="chatlog__reaction-count">12</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="&#128150;" title="&#128150;" src="https://twemoji.maxcdn.com/2/72x72/1f496.png">
+                                <span class="chatlog__reaction-count">12</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="hug" title="hug" src="https://cdn.discordapp.com/emojis/716922719622397963.png">
+                                <span class="chatlog__reaction-count">3</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/199230755212099593/a_e479d1e5096abd5da0ab65f978a69ca6.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="RinLockhart#5930" data-user-id="199230755212099593" style="color: rgb(26,188,156)">RinLockhart</span>
+
+
+        <span class="chatlog__timestamp">15-Aug-20 07:59 PM</span>
+
+            <div class="chatlog__message " data-message-id="744389777012424715" id="message-744389777012424715">
+                <div class="chatlog__content">
+                    <div class="markdown">Kelly stares at the tall man standing silently in the back. It is just a game... but standing alone after watching her companions fall so easily stoked a fire in her. A fire that never seems to go out. The sweet voice of one of her heroes, D<em>lly Parton, whispers to her. *Give &#39;em Hell, Darlin...</em>
+
+The ball is helpless in Kelly&#39;s grip but she throws it into the air and hits it towards Rashan. 
+
+(RinLockhart rolled Roll 21 ([20] + 1)) <span class="chatlog__edited-timestamp" title="15-Aug-20 08:03 PM">(edited)</span></div>
+                </div>
+
+                    <div class="chatlog__attachment">
+                            <a href="https://cdn.discordapp.com/attachments/744142199825891369/744389776664297482/vollyevent2.png">
+                                    <img class="chatlog__attachment-thumbnail" src="https://cdn.discordapp.com/attachments/744142199825891369/744389776664297482/vollyevent2.png" alt="Attachment">
+                            </a>
+                    </div>
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="fwend" title="fwend" src="https://cdn.discordapp.com/emojis/716922719731449877.png">
+                                <span class="chatlog__reaction-count">13</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="y4" title="y4" src="https://cdn.discordapp.com/emojis/731454923363057716.png">
+                                <span class="chatlog__reaction-count">13</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="Rindiewacks" title="Rindiewacks" src="https://cdn.discordapp.com/emojis/740467421537632308.png">
+                                <span class="chatlog__reaction-count">13</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="&#128591;" title="&#128591;" src="https://twemoji.maxcdn.com/2/72x72/1f64f.png">
+                                <span class="chatlog__reaction-count">4</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="shy" title="shy" src="https://cdn.discordapp.com/emojis/716922719496699964.png">
+                                <span class="chatlog__reaction-count">4</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/231310315093098496/f33350d286396886a358d82e85e6af5f.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="io#7619" data-user-id="231310315093098496" style="color: rgb(255,255,255)">Lanceliot</span>
+
+
+        <span class="chatlog__timestamp">15-Aug-20 09:54 PM</span>
+
+            <div class="chatlog__message " data-message-id="744418890834247681" id="message-744418890834247681">
+                <div class="chatlog__content">
+                    <div class="markdown">It wasn&#39;t like Rashan to partake in an activity as &quot;brutish&quot; as Hitball, but he was surprisingly opportunistic-- recognizing that he could gather some useful data from the game. He stood towards the back, observing the situation. 
+
+Within seconds the first round was already nearing its end--  and he was slightly miffed as a result. Admittedly he was most interested in seeing the physical prowess of &quot;The Fiery&quot; but with 2/3 of their team already out, his data collection would be tainted. 
+
+Then suddenly his smart glasses picked up on the sudden rise in temperature from dainty girl across the way. &quot;Finally&quot; he thought.
+
+As the ball comes hurling at Rashan, He took a step forward. &quot;Allow me--&quot;  Raising his hand as if to catch the ball-- 
+
+Lanceliot rolled Roll 7 ([3] + 4) </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="744418929908121610" id="message-744418929908121610">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+                    <div class="chatlog__attachment">
+                            <a href="https://cdn.discordapp.com/attachments/744142199825891369/744418929744543834/image0.png">
+                                    <img class="chatlog__attachment-thumbnail" src="https://cdn.discordapp.com/attachments/744142199825891369/744418929744543834/image0.png" alt="Attachment">
+                            </a>
+                    </div>
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="cackle" title="cackle" src="https://cdn.discordapp.com/emojis/717966863736504361.png">
+                                <span class="chatlog__reaction-count">15</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="peaceout" title="peaceout" src="https://cdn.discordapp.com/emojis/648622115968516116.png">
+                                <span class="chatlog__reaction-count">4</span>
+                            </div>
+                    </div>
+            </div>
+            <div class="chatlog__message " data-message-id="744418978289680487" id="message-744418978289680487">
+                <div class="chatlog__content">
+                    <div class="markdown">And with that-- he excused himself-- </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/68089440983068672/a276f475c3b5040883a2417e9354e51c.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Yuli#3011" data-user-id="68089440983068672" style="color: rgb(233,30,99)">King Arthyuri</span>
+
+
+        <span class="chatlog__timestamp">15-Aug-20 10:10 PM</span>
+
+            <div class="chatlog__message " data-message-id="744422717922476084" id="message-744422717922476084">
+                <div class="chatlog__content">
+                    <div class="markdown">An ugly hearty laughter could be heard from afar, faint but also annoying enough to be distinguished from other natural noises. 
+
+And for whom that laughter belonged to, only Rashan would know. </div>
+                </div>
+
+                    <div class="chatlog__attachment">
+                            <a href="https://cdn.discordapp.com/attachments/744142199825891369/744422717796909176/unknown.png">
+                                    <img class="chatlog__attachment-thumbnail" src="https://cdn.discordapp.com/attachments/744142199825891369/744422717796909176/unknown.png" alt="Attachment">
+                            </a>
+                    </div>
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="cackle" title="cackle" src="https://cdn.discordapp.com/emojis/717966863736504361.png">
+                                <span class="chatlog__reaction-count">18</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="hug" title="hug" src="https://cdn.discordapp.com/emojis/716922719622397963.png">
+                                <span class="chatlog__reaction-count">17</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="Rindiewacks" title="Rindiewacks" src="https://cdn.discordapp.com/emojis/740467421537632308.png">
+                                <span class="chatlog__reaction-count">17</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="bunbun" title="bunbun" src="https://cdn.discordapp.com/emojis/716923370872242216.png">
+                                <span class="chatlog__reaction-count">15</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="y2" title="y2" src="https://cdn.discordapp.com/emojis/731454923405000714.png">
+                                <span class="chatlog__reaction-count">14</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="distanteyes" title="distanteyes" src="https://cdn.discordapp.com/emojis/716922719836569670.png">
+                                <span class="chatlog__reaction-count">14</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="&#128557;" title="&#128557;" src="https://twemoji.maxcdn.com/2/72x72/1f62d.png">
+                                <span class="chatlog__reaction-count">15</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="SCREAM" title="SCREAM" src="https://cdn.discordapp.com/emojis/717977713536925737.png">
+                                <span class="chatlog__reaction-count">14</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="&#128530;" title="&#128530;" src="https://twemoji.maxcdn.com/2/72x72/1f612.png">
+                                <span class="chatlog__reaction-count">14</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="cursereach" title="cursereach" src="https://cdn.discordapp.com/emojis/716922719630786602.png">
+                                <span class="chatlog__reaction-count">14</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="i_" title="i_" src="https://cdn.discordapp.com/emojis/734902311352270920.png">
+                                <span class="chatlog__reaction-count">12</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="&#127486;" title="&#127486;" src="https://twemoji.maxcdn.com/2/72x72/1f1fe.png">
+                                <span class="chatlog__reaction-count">14</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="&#127466;" title="&#127466;" src="https://twemoji.maxcdn.com/2/72x72/1f1ea.png">
+                                <span class="chatlog__reaction-count">14</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="rindie" title="rindie" src="https://cdn.discordapp.com/emojis/735991849633972246.png">
+                                <span class="chatlog__reaction-count">13</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="&#127480;" title="&#127480;" src="https://twemoji.maxcdn.com/2/72x72/1f1f8.png">
+                                <span class="chatlog__reaction-count">14</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="&#129314;" title="&#129314;" src="https://twemoji.maxcdn.com/2/72x72/1f922.png">
+                                <span class="chatlog__reaction-count">12</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="uwucri" title="uwucri" src="https://cdn.discordapp.com/emojis/716922719849021440.png">
+                                <span class="chatlog__reaction-count">12</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="deadinside" title="deadinside" src="https://cdn.discordapp.com/emojis/728381864565538876.png">
+                                <span class="chatlog__reaction-count">12</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/162546384887742465/d780a2a26924d8f9b5a65f07465c97d9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Kinji#9323" data-user-id="162546384887742465" style="color: rgb(233,30,99)">Kinji</span>
+
+
+        <span class="chatlog__timestamp">15-Aug-20 10:47 PM</span>
+
+            <div class="chatlog__message " data-message-id="744432191978602597" id="message-744432191978602597">
+                <div class="chatlog__content">
+                    <div class="markdown">Everything Happened so fast, Tyche was confused when Mr Hamada Left the team <em>&quot;?????????? What-Wait he&#39;s out????&quot;</em> And just realizes that it was his turn again when Aimi passed him the ball-
+Tyche looked to the last remaining member, by his surprise, Ms Kelly radiating an intimidating aura which scared tyche even more, Tyche throws the ball towards her with a weak force --
+
+Tyhce Throws <strong>7</strong> [d20 : 4] + 3
+<span class="mention" title="RinLockhart#5930">@RinLockhart</span> <span class="chatlog__edited-timestamp" title="15-Aug-20 11:01 PM">(edited)</span></div>
+                </div>
+
+                    <div class="chatlog__attachment">
+                            <a href="https://cdn.discordapp.com/attachments/744142199825891369/744432191668486164/004.png">
+                                    <img class="chatlog__attachment-thumbnail" src="https://cdn.discordapp.com/attachments/744142199825891369/744432191668486164/004.png" alt="Attachment">
+                            </a>
+                    </div>
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="cackle" title="cackle" src="https://cdn.discordapp.com/emojis/717966863736504361.png">
+                                <span class="chatlog__reaction-count">14</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="uwucry" title="uwucry" src="https://cdn.discordapp.com/emojis/716922719706546266.png">
+                                <span class="chatlog__reaction-count">12</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="cry" title="cry" src="https://cdn.discordapp.com/emojis/735671357106421911.png">
+                                <span class="chatlog__reaction-count">12</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/199230755212099593/a_e479d1e5096abd5da0ab65f978a69ca6.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="RinLockhart#5930" data-user-id="199230755212099593" style="color: rgb(26,188,156)">RinLockhart</span>
+
+
+        <span class="chatlog__timestamp">16-Aug-20 01:38 PM</span>
+
+            <div class="chatlog__message " data-message-id="744656426273865738" id="message-744656426273865738">
+                <div class="chatlog__content">
+                    <div class="markdown">they were beaten and that fire still stoked. she cools herself down with a huff and waits for the second round. </div>
+                </div>
+
+                    <div class="chatlog__attachment">
+                            <a href="https://cdn.discordapp.com/attachments/744142199825891369/744656426051436674/vollyevent3.png">
+                                    <img class="chatlog__attachment-thumbnail" src="https://cdn.discordapp.com/attachments/744142199825891369/744656426051436674/vollyevent3.png" alt="Attachment">
+                            </a>
+                    </div>
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="744656426961600552" id="message-744656426961600552">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+                    <div class="chatlog__attachment">
+                            <a href="https://cdn.discordapp.com/attachments/744142199825891369/744656426684645426/vollyevent4.png">
+                                    <img class="chatlog__attachment-thumbnail" src="https://cdn.discordapp.com/attachments/744142199825891369/744656426684645426/vollyevent4.png" alt="Attachment">
+                            </a>
+                    </div>
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="fwend" title="fwend" src="https://cdn.discordapp.com/emojis/716922719731449877.png">
+                                <span class="chatlog__reaction-count">8</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="SCREAM" title="SCREAM" src="https://cdn.discordapp.com/emojis/717977713536925737.png">
+                                <span class="chatlog__reaction-count">8</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="Rindiewacks" title="Rindiewacks" src="https://cdn.discordapp.com/emojis/740467421537632308.png">
+                                <span class="chatlog__reaction-count">8</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="pepeWow" title="pepeWow" src="https://cdn.discordapp.com/emojis/726667591430438972.png">
+                                <span class="chatlog__reaction-count">6</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="oof" title="oof" src="https://cdn.discordapp.com/emojis/717509520791830538.png">
+                                <span class="chatlog__reaction-count">6</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="oof2" title="oof2" src="https://cdn.discordapp.com/emojis/716922719593168928.png">
+                                <span class="chatlog__reaction-count">6</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/231310315093098496/f33350d286396886a358d82e85e6af5f.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="io#7619" data-user-id="231310315093098496" style="color: rgb(255,255,255)">Lanceliot</span>
+
+
+        <span class="chatlog__timestamp">16-Aug-20 02:31 PM</span>
+
+            <div class="chatlog__message " data-message-id="744669666500149309" id="message-744669666500149309">
+                <div class="chatlog__content">
+                    <div class="markdown">As Kelly was eliminated, Rashan walked back onto the field, giving Tyche an approving nod for finishing  round one promptly. He positioned himself in front this time and as soon as the whistle blew to signal the start of a new round, he impatiently tossed the ball over to dom.
+
+<strong>[d20 : 7] + 4</strong> = 11 <span class="chatlog__edited-timestamp" title="16-Aug-20 08:59 PM">(edited)</span></div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/218328871731200000/456d9ebd244fcfb0e6066230fa1fe61d.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mintfoxmimi#1012" data-user-id="218328871731200000" style="color: rgb(233,30,99)">HolyEXCALIMINTCup</span>
+
+
+        <span class="chatlog__timestamp">17-Aug-20 08:30 PM</span>
+
+            <div class="chatlog__message " data-message-id="745122324654719038" id="message-745122324654719038">
+                <div class="chatlog__content">
+                    <div class="markdown">================= ROUND 2!! ==================
+============== BUT MEANWHILE================
+Dom thought of since he just got out so fast- theres a little flame boiling in his heart... the frustration.... but most importantly......he didnt ate alot last night and breakfast....he actually felt hungry...and so he took this time to walk off to the side vendor who is selling some quick BBQs...
+<em>mmm finally some good food.......</em>
+============================================
+he wasent aware of how the game is going after he left- because there is some GOD DAMMED SEA DEVILS (the seagulls) CIRCLING AROUND HIM TRYING TO SNATCH HIS FOOD -and he was ready to take another order form the BBQ vendor - suddenly someone called him up and pushed him back into the game zone 
+<strong>Dom </strong>:  Oi- I&#39;m not done with my grill yet- what is the fuss--
+
+<em><strong>BEEPPP</strong></em>
+<em><strong>WHOOOO-- BONK</strong></em>
+
+<strong>Dom </strong>: what the fuc--- 
+another ball impact felt on his waist and he look up to glare at the man wearing sunshades 
+<strong>Dom </strong>: OI JACKASS- I WONT BE BUYING YOU GRILL AFTER THIS MATCH
+
+He walks back out of the zone and get his second BBQ <span class="chatlog__edited-timestamp" title="17-Aug-20 08:33 PM">(edited)</span></div>
+                </div>
+
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="cackle" title="cackle" src="https://cdn.discordapp.com/emojis/717966863736504361.png">
+                                <span class="chatlog__reaction-count">15</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="fwend" title="fwend" src="https://cdn.discordapp.com/emojis/716922719731449877.png">
+                                <span class="chatlog__reaction-count">3</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="f13" title="f13" src="https://cdn.discordapp.com/emojis/728382184720957450.gif">
+                                <span class="chatlog__reaction-count">3</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/199230755212099593/a_e479d1e5096abd5da0ab65f978a69ca6.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="RinLockhart#5930" data-user-id="199230755212099593" style="color: rgb(26,188,156)">RinLockhart</span>
+
+
+        <span class="chatlog__timestamp">19-Aug-20 01:29 PM</span>
+
+            <div class="chatlog__message " data-message-id="745741332756168824" id="message-745741332756168824">
+                <div class="chatlog__content">
+                    <div class="markdown">Kelly hoped her team would be able to get through this but luck has been shifting onto Grimoire&#39;s side. No. Not on her watch.
+
+[[d20 : 18] + 1
+In the end, the result was: 19] <span class="chatlog__edited-timestamp" title="19-Aug-20 01:30 PM">(edited)</span></div>
+                </div>
+
+                    <div class="chatlog__attachment">
+                            <a href="https://cdn.discordapp.com/attachments/744142199825891369/745741332504379432/vollyevent13.png">
+                                    <img class="chatlog__attachment-thumbnail" src="https://cdn.discordapp.com/attachments/744142199825891369/745741332504379432/vollyevent13.png" alt="Attachment">
+                            </a>
+                    </div>
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="745741353090285588" id="message-745741353090285588">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+                    <div class="chatlog__attachment">
+                            <a href="https://cdn.discordapp.com/attachments/744142199825891369/745741352783970365/vollyevent14.png">
+                                    <img class="chatlog__attachment-thumbnail" src="https://cdn.discordapp.com/attachments/744142199825891369/745741352783970365/vollyevent14.png" alt="Attachment">
+                            </a>
+                    </div>
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="fwend" title="fwend" src="https://cdn.discordapp.com/emojis/716922719731449877.png">
+                                <span class="chatlog__reaction-count">12</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="cackle" title="cackle" src="https://cdn.discordapp.com/emojis/717966863736504361.png">
+                                <span class="chatlog__reaction-count">12</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/218328871731200000/456d9ebd244fcfb0e6066230fa1fe61d.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mintfoxmimi#1012" data-user-id="218328871731200000" style="color: rgb(233,30,99)">HolyEXCALIMINTCup</span>
+
+
+        <span class="chatlog__timestamp">19-Aug-20 02:52 PM</span>
+
+            <div class="chatlog__message " data-message-id="745762260986626058" id="message-745762260986626058">
+                <div class="chatlog__content">
+                    <div class="markdown"><strong>Dom</strong> : destroy them for me!! </div>
+                </div>
+
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="&#128170;" title="&#128170;" src="https://twemoji.maxcdn.com/2/72x72/1f4aa.png">
+                                <span class="chatlog__reaction-count">13</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="&#128548;" title="&#128548;" src="https://twemoji.maxcdn.com/2/72x72/1f624.png">
+                                <span class="chatlog__reaction-count">13</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="hug" title="hug" src="https://cdn.discordapp.com/emojis/716922719622397963.png">
+                                <span class="chatlog__reaction-count">4</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/162546384887742465/d780a2a26924d8f9b5a65f07465c97d9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Kinji#9323" data-user-id="162546384887742465" style="color: rgb(233,30,99)">Kinji</span>
+
+
+        <span class="chatlog__timestamp">20-Aug-20 08:10 AM</span>
+
+            <div class="chatlog__message " data-message-id="746023276064669698" id="message-746023276064669698">
+                <div class="chatlog__content">
+                    <div class="markdown">((Sorry I really wanted to draw this out but Im currently under the weather <img class="emoji " alt="uwucry" title="uwucry" src="https://cdn.discordapp.com/emojis/716922719706546266.png"> ))
+
+Tyche timidly replied to kelly <em>Yes..Kelly????</em> Tyche gotten more intimidated with her confidence  knowing that Grimoire owned them in the first round.
+
+As kelly released her throw attempted to catch the ball, He went for a dive but it was miscalculated he went a bit to early, making the ball go pass his torso and suddenly a strong <strong>THUD</strong> can be heard <em>OOF!!!</em> the ball manage to hit Tyche’s lower back, Tyche just weakly tries to get up shaking  and gives kelly a weak thumbs up for hitting him
+
+He slowly tries to drag himself to the shade for his early retirement. </div>
+                </div>
+
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="uwucri" title="uwucri" src="https://cdn.discordapp.com/emojis/716922719849021440.png">
+                                <span class="chatlog__reaction-count">12</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="&#128532;" title="&#128532;" src="https://twemoji.maxcdn.com/2/72x72/1f614.png">
+                                <span class="chatlog__reaction-count">12</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="ded" title="ded" src="https://cdn.discordapp.com/emojis/716922719823986758.png">
+                                <span class="chatlog__reaction-count">10</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/281304462079950849/e0f46a07edd6794a6fa7db407ce25670.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="yokaiy#9621" data-user-id="281304462079950849" style="color: rgb(233,30,99)">Yōkai(y)</span>
+
+
+        <span class="chatlog__timestamp">20-Aug-20 09:40 PM</span>
+
+            <div class="chatlog__message " data-message-id="746227255956602910" id="message-746227255956602910">
+                <div class="chatlog__content">
+                    <div class="markdown">Glad to actually get a pass at the ball this time around, Glass grabs the ball and gets ready to throw. Honestly, after how good Kelly&#39;s throw was, he can feel a little bit of anxiety welling up, especially given how bad the first round had gone for him. Neither of the two remaining on the other side had seemed super into it before, but that wasn&#39;t necessarily an indicator of their skill. He aims at the tall man <s>since it was almost like the universe itself was telling him to</s>.
+
+<strong>[10]</strong> </div>
+                </div>
+
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="cackle" title="cackle" src="https://cdn.discordapp.com/emojis/717966863736504361.png">
+                                <span class="chatlog__reaction-count">4</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/231310315093098496/f33350d286396886a358d82e85e6af5f.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="io#7619" data-user-id="231310315093098496" style="color: rgb(255,255,255)">Lanceliot</span>
+
+
+        <span class="chatlog__timestamp">20-Aug-20 10:06 PM</span>
+
+            <div class="chatlog__message " data-message-id="746233749573992468" id="message-746233749573992468">
+                <div class="chatlog__content">
+                    <div class="markdown">Rashan wouldn&#39;t admit it, but he was a bit surprised the taller man managed to be first eliminated..... again. He suspects it was due to the insufficient amount of data he was able to gather last round. 
+
+Now that it was just Aimi and himself, he decided he&#39;d take a more hands on approach to gathering the information he wanted. 
+
+He calmly approached the ball headed towards him and caught it. Without hesitation he tosses it back towards Glass, adding a bit of spin to the ball to see how well the suzaku boy would catch it. 
+
+Catch and Throw:  <strong>21 </strong> </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/281304462079950849/e0f46a07edd6794a6fa7db407ce25670.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="yokaiy#9621" data-user-id="281304462079950849" style="color: rgb(233,30,99)">Yōkai(y)</span>
+
+
+        <span class="chatlog__timestamp">20-Aug-20 10:17 PM</span>
+
+            <div class="chatlog__message " data-message-id="746236391825866772" id="message-746236391825866772">
+                <div class="chatlog__content">
+                    <div class="markdown">Well, the throw... could have been better, okay, yeah, he gets that. You don&#39;t need to tell him that. The tall man catches it easily and sends the ball back in Glass&#39; direction <s>with some added flair that is completely lost on him lmfao</s>. It&#39;s aimed pretty dead-on at him, though, and Glass manages to catch it with both hands.
+
+So tossing at the tall guy wasn&#39;t the best choice. Glass throws it towards the girl instead. 
+
+<strong>[Catch 20, throw 15]</strong> </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/199230755212099593/a_e479d1e5096abd5da0ab65f978a69ca6.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="RinLockhart#5930" data-user-id="199230755212099593" style="color: rgb(26,188,156)">RinLockhart</span>
+
+
+        <span class="chatlog__timestamp">20-Aug-20 10:19 PM</span>
+
+            <div class="chatlog__message " data-message-id="746236945180655709" id="message-746236945180655709">
+                <div class="chatlog__content">
+                    <div class="markdown">Kelly squats near Glass while biting her thumb from the tension. She folds her arms and bounces in place. <span class="chatlog__edited-timestamp" title="20-Aug-20 10:20 PM">(edited)</span></div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/231522256763879424/f2fdb896df2c1adb3270c61f619a2932.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Uovo#4576" data-user-id="231522256763879424" style="color: rgb(52,152,219)">xXxMistressAixXx ✌&#127859;</span>
+
+
+        <span class="chatlog__timestamp">20-Aug-20 10:45 PM</span>
+
+            <div class="chatlog__message " data-message-id="746243533786054686" id="message-746243533786054686">
+                <div class="chatlog__content">
+                    <div class="markdown">Having gotten used to the ball mysteriously ignoring her, Aimi had taken a load off and pulled out the latest Jump to entertain herself while waiting for the game to conclude, convinced the ball would continue to mysteriously avoid her. She waved her legs back and forth, balls whizzing by overhead. Suddenly, she felt she could no longer wave her legs... because she had caught a ball tossed her way in them.
+
+CATCH: 20 </div>
+                </div>
+
+                    <div class="chatlog__attachment">
+                            <a href="https://cdn.discordapp.com/attachments/744142199825891369/746243533551304764/image0.png">
+                                    <img class="chatlog__attachment-thumbnail" src="https://cdn.discordapp.com/attachments/744142199825891369/746243533551304764/image0.png" alt="Attachment">
+                            </a>
+                    </div>
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="cackle" title="cackle" src="https://cdn.discordapp.com/emojis/717966863736504361.png">
+                                <span class="chatlog__reaction-count">16</span>
+                            </div>
+                    </div>
+            </div>
+            <div class="chatlog__message " data-message-id="746244687110733894" id="message-746244687110733894">
+                <div class="chatlog__content">
+                    <div class="markdown">Unwilling to rise from her comfortable spot in the sand, Aimi glanced over at the woman with the twin buns and sighed to herself. She gently pushed the ball and sent it lazily across the sand.
+
+<em>Throw: 2</em> <img class="emoji " alt="y2" title="y2" src="https://cdn.discordapp.com/emojis/731454923405000714.png"> </div>
+                </div>
+
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="cackle" title="cackle" src="https://cdn.discordapp.com/emojis/717966863736504361.png">
+                                <span class="chatlog__reaction-count">12</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/199230755212099593/a_e479d1e5096abd5da0ab65f978a69ca6.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="RinLockhart#5930" data-user-id="199230755212099593" style="color: rgb(26,188,156)">RinLockhart</span>
+
+
+        <span class="chatlog__timestamp">21-Aug-20 02:31 PM</span>
+
+            <div class="chatlog__message " data-message-id="746481573406310420" id="message-746481573406310420">
+                <div class="chatlog__content">
+                    <div class="markdown"><em>I miss that Tyche guy,</em> Kelly thinks. At least he was scared of her. The other two don&#39;t have any interest playing and it&#39;s getting on her nerves. Grumpy, she isn&#39;t paying attention to the ball and the wind takes care of it for her.
+
+RinLockhart rolled Roll 17 ([15] + 2) <span class="chatlog__edited-timestamp" title="21-Aug-20 02:31 PM">(edited)</span></div>
+                </div>
+
+                    <div class="chatlog__attachment">
+                            <a href="https://cdn.discordapp.com/attachments/744142199825891369/746481573179818106/vollyevent15.png">
+                                    <img class="chatlog__attachment-thumbnail" src="https://cdn.discordapp.com/attachments/744142199825891369/746481573179818106/vollyevent15.png" alt="Attachment">
+                            </a>
+                    </div>
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="hug" title="hug" src="https://cdn.discordapp.com/emojis/716922719622397963.png">
+                                <span class="chatlog__reaction-count">10</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="uwucry" title="uwucry" src="https://cdn.discordapp.com/emojis/716922719706546266.png">
+                                <span class="chatlog__reaction-count">10</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="pepeWow" title="pepeWow" src="https://cdn.discordapp.com/emojis/726667591430438972.png">
+                                <span class="chatlog__reaction-count">10</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/231522256763879424/f2fdb896df2c1adb3270c61f619a2932.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Uovo#4576" data-user-id="231522256763879424" style="color: rgb(52,152,219)">xXxMistressAixXx ✌&#127859;</span>
+
+
+        <span class="chatlog__timestamp">21-Aug-20 02:49 PM</span>
+
+            <div class="chatlog__message " data-message-id="746486248079884291" id="message-746486248079884291">
+                <div class="chatlog__content">
+                    <div class="markdown">Aimi squinted at Kelly&#39;s lack luster response to her pathetic throw, understanding why she wouldn&#39;t be falling over herself to dodge it, but still feeling indignant. She closed Jump and stood up properly this time, dusting sand off the front of her bathing suit. Aimi sauntered over to the ball and glanced over at Kelly, ball tucked under her arm. Finally, Aimi threw the ball with slightly more effort this time. 
+
+<strong>Throw: 14</strong> </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/199230755212099593/a_e479d1e5096abd5da0ab65f978a69ca6.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="RinLockhart#5930" data-user-id="199230755212099593" style="color: rgb(26,188,156)">RinLockhart</span>
+
+
+        <span class="chatlog__timestamp">21-Aug-20 02:54 PM</span>
+
+            <div class="chatlog__message " data-message-id="746487366419742736" id="message-746487366419742736">
+                <div class="chatlog__content">
+                    <div class="markdown">Slowly, Kelly stands up. Her thick brows furrowed, her frown still etched on her face. She catches the ball with one hand.
+
+<strong>Catch: 20</strong>
+
+With her frustration controlling her, she throws back at Aimi a little harder.
+
+<strong>Throw: 14</strong> </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/231522256763879424/f2fdb896df2c1adb3270c61f619a2932.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Uovo#4576" data-user-id="231522256763879424" style="color: rgb(52,152,219)">xXxMistressAixXx ✌&#127859;</span>
+
+
+        <span class="chatlog__timestamp">21-Aug-20 03:02 PM</span>
+
+            <div class="chatlog__message " data-message-id="746489343245418607" id="message-746489343245418607">
+                <div class="chatlog__content">
+                    <div class="markdown">Aimi furrowed her brow at Kelly&#39;s catch, now properly poised to receive the ball and cracking her neck in preparation for the next throw.
+
+<strong>Catch: 16</strong>
+
+Aimi smirked as she managed to catch the ball once again despite her abysmal athleticism. She thought Suzaku was <em>full of jocks...</em> what gives? She shouldn&#39;t be having this volley in the first place. Finally, she wound up to return the throw once again, feeling the slightest bit of confidence she could continue this exchange.
+
+<strong>Throw: 12</strong> <span class="chatlog__edited-timestamp" title="21-Aug-20 03:05 PM">(edited)</span></div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/199230755212099593/a_e479d1e5096abd5da0ab65f978a69ca6.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="RinLockhart#5930" data-user-id="199230755212099593" style="color: rgb(26,188,156)">RinLockhart</span>
+
+
+        <span class="chatlog__timestamp">21-Aug-20 03:05 PM</span>
+
+            <div class="chatlog__message " data-message-id="746490238125211710" id="message-746490238125211710">
+                <div class="chatlog__content">
+                    <div class="markdown"><strong>Catch: 11</strong>
+Seeing even less effort on Aimi&#39;s part Kelly&#39;s stands up straight with both feet planted on the ground. Deep down in her soul she can hear <em>Not Ready To Make Nice</em> by the Dixie Chicks... until the ball whizzes right onto her left hair bun. Deflated, Kelly&#39;s shoulders slump and she almost doubles over. &quot;I&#39;m seriously craving the biggest steak right now,&quot; with another huff she walks off to the side. <span class="chatlog__edited-timestamp" title="21-Aug-20 03:06 PM">(edited)</span></div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/231310315093098496/f33350d286396886a358d82e85e6af5f.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="io#7619" data-user-id="231310315093098496" style="color: rgb(255,255,255)">Lanceliot</span>
+
+
+        <span class="chatlog__timestamp">21-Aug-20 03:11 PM</span>
+
+            <div class="chatlog__message " data-message-id="746491584928940135" id="message-746491584928940135">
+                <div class="chatlog__content">
+                    <div class="markdown">Rashan sighs, he managed to get some pretty good data from the precious volley but didn&#39;t want the game to end* just* yet. In fact, another round was favorable considering he still had no information on the Taller Suzakus throwing stats. He tosses the ball over to glass, giving the remaining suzaku one last chance. 
+
+<strong>Throw: 9</strong> </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/281304462079950849/e0f46a07edd6794a6fa7db407ce25670.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="yokaiy#9621" data-user-id="281304462079950849" style="color: rgb(233,30,99)">Yōkai(y)</span>
+
+
+        <span class="chatlog__timestamp">21-Aug-20 09:58 PM</span>
+
+            <div class="chatlog__message " data-message-id="746594070003974192" id="message-746594070003974192">
+                <div class="chatlog__content">
+                    <div class="markdown">Glass sidesteps out of the way of the oncoming ball, a little peeved that it seemed to be an easy toss aimed at him this time. Like that guy was taunting him, somehow.
+
+<strong>[Dodge 14]</strong>
+
+Scooping the ball up, Glass sizes up the remaining competition, nervous that he&#39;s the last one up. Kelly had been doing <em>so</em> well, too... Glass decides to try and avenge her like she did for him in the first round, and throws the ball towards the woman who got her out before.
+
+<strong>[Throw 19]</strong> </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/231522256763879424/f2fdb896df2c1adb3270c61f619a2932.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Uovo#4576" data-user-id="231522256763879424" style="color: rgb(52,152,219)">xXxMistressAixXx ✌&#127859;</span>
+
+
+        <span class="chatlog__timestamp">21-Aug-20 10:37 PM</span>
+
+            <div class="chatlog__message " data-message-id="746603859761299457" id="message-746603859761299457">
+                <div class="chatlog__content">
+                    <div class="markdown">Aimi was feeling it. She felt she could handle whatever was thrown at her. Sure putting in effort was lame, but look at how WELL she was doing- </div>
+                </div>
+
+                    <div class="chatlog__attachment">
+                            <a href="https://cdn.discordapp.com/attachments/744142199825891369/746603859534938192/unknown.png">
+                                    <img class="chatlog__attachment-thumbnail" src="https://cdn.discordapp.com/attachments/744142199825891369/746603859534938192/unknown.png" alt="Attachment">
+                            </a>
+                    </div>
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="cackle" title="cackle" src="https://cdn.discordapp.com/emojis/717966863736504361.png">
+                                <span class="chatlog__reaction-count">7</span>
+                            </div>
+                    </div>
+            </div>
+            <div class="chatlog__message " data-message-id="746603926379298878" id="message-746603926379298878">
+                <div class="chatlog__content">
+                    <div class="markdown"><em><strong>AIMI: OUT</strong></em> </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/162546384887742465/d780a2a26924d8f9b5a65f07465c97d9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Kinji#9323" data-user-id="162546384887742465" style="color: rgb(233,30,99)">Kinji</span>
+
+
+        <span class="chatlog__timestamp">21-Aug-20 10:59 PM</span>
+
+            <div class="chatlog__message " data-message-id="746609482854825995" id="message-746609482854825995">
+                <div class="chatlog__content">
+                    <div class="markdown">((meanwhile on the sides ))
+Tyche just went  ..... coz his friend will do something crazy </div>
+                </div>
+
+                    <div class="chatlog__attachment">
+                            <a href="https://cdn.discordapp.com/attachments/744142199825891369/746609482586652743/unknown.png">
+                                    <img class="chatlog__attachment-thumbnail" src="https://cdn.discordapp.com/attachments/744142199825891369/746609482586652743/unknown.png" alt="Attachment">
+                            </a>
+                    </div>
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="uwucry" title="uwucry" src="https://cdn.discordapp.com/emojis/716922719706546266.png">
+                                <span class="chatlog__reaction-count">4</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/231310315093098496/f33350d286396886a358d82e85e6af5f.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="io#7619" data-user-id="231310315093098496" style="color: rgb(255,255,255)">Lanceliot</span>
+
+
+        <span class="chatlog__timestamp">22-Aug-20 03:31 AM</span>
+
+            <div class="chatlog__message " data-message-id="746677941521612821" id="message-746677941521612821">
+                <div class="chatlog__content">
+                    <div class="markdown">After an intense back and forth, Rashan was satisfied with the data he gathered and decided it was time to wrap things up. </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="746677958336577556" id="message-746677958336577556">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+                    <div class="chatlog__attachment">
+                            <a href="https://cdn.discordapp.com/attachments/744142199825891369/746677958021742682/image0.png">
+                                    <img class="chatlog__attachment-thumbnail" src="https://cdn.discordapp.com/attachments/744142199825891369/746677958021742682/image0.png" alt="Attachment">
+                            </a>
+                    </div>
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="&#128151;" title="&#128151;" src="https://twemoji.maxcdn.com/2/72x72/1f497.png">
+                                <span class="chatlog__reaction-count">4</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="SCREAM" title="SCREAM" src="https://cdn.discordapp.com/emojis/717977713536925737.png">
+                                <span class="chatlog__reaction-count">4</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="&#127462;" title="&#127462;" src="https://twemoji.maxcdn.com/2/72x72/1f1e6.png">
+                                <span class="chatlog__reaction-count">3</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="&#127463;" title="&#127463;" src="https://twemoji.maxcdn.com/2/72x72/1f1e7.png">
+                                <span class="chatlog__reaction-count">3</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="&#127480;" title="&#127480;" src="https://twemoji.maxcdn.com/2/72x72/1f1f8.png">
+                                <span class="chatlog__reaction-count">3</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/281304462079950849/e0f46a07edd6794a6fa7db407ce25670.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="yokaiy#9621" data-user-id="281304462079950849" style="color: rgb(233,30,99)">Yōkai(y)</span>
+
+
+        <span class="chatlog__timestamp">23-Aug-20 12:06 AM</span>
+
+            <div class="chatlog__message " data-message-id="746988705272823849" id="message-746988705272823849">
+                <div class="chatlog__content">
+                    <div class="markdown">Tired and anxious after the rally goes on for a while, Glass flubs his catch. The ball bounces out of his arms and onto the sand, marking his teams loss. He feels his face heat up in shame. </div>
+                </div>
+
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="fwend" title="fwend" src="https://cdn.discordapp.com/emojis/716922719731449877.png">
+                                <span class="chatlog__reaction-count">9</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="&#129402;" title="&#129402;" src="https://twemoji.maxcdn.com/2/72x72/1f97a.png">
+                                <span class="chatlog__reaction-count">9</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="&#128557;" title="&#128557;" src="https://twemoji.maxcdn.com/2/72x72/1f62d.png">
+                                <span class="chatlog__reaction-count">9</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="&#127467;" title="&#127467;" src="https://twemoji.maxcdn.com/2/72x72/1f1eb.png">
+                                <span class="chatlog__reaction-count">7</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/199230755212099593/a_e479d1e5096abd5da0ab65f978a69ca6.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="RinLockhart#5930" data-user-id="199230755212099593" style="color: rgb(26,188,156)">RinLockhart</span>
+
+
+        <span class="chatlog__timestamp">23-Aug-20 01:17 AM</span>
+
+            <div class="chatlog__message " data-message-id="747006473145417778" id="message-747006473145417778">
+                <div class="chatlog__content">
+                    <div class="markdown">Kelly can see the shame in his face and gets up to go towards him. A reassuring hand hovers over his back. &quot;Hey, you did amazing.&quot; She leans in a little so nobody can hear it. &quot;Thank you.&quot; </div>
+                </div>
+
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="fwend" title="fwend" src="https://cdn.discordapp.com/emojis/716922719731449877.png">
+                                <span class="chatlog__reaction-count">7</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="uwucry" title="uwucry" src="https://cdn.discordapp.com/emojis/716922719706546266.png">
+                                <span class="chatlog__reaction-count">5</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="&#129402;" title="&#129402;" src="https://twemoji.maxcdn.com/2/72x72/1f97a.png">
+                                <span class="chatlog__reaction-count">5</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="&#128557;" title="&#128557;" src="https://twemoji.maxcdn.com/2/72x72/1f62d.png">
+                                <span class="chatlog__reaction-count">4</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/162546384887742465/d780a2a26924d8f9b5a65f07465c97d9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Kinji#9323" data-user-id="162546384887742465" style="color: rgb(233,30,99)">Kinji</span>
+
+
+        <span class="chatlog__timestamp">23-Aug-20 10:08 AM</span>
+
+            <div class="chatlog__message " data-message-id="747140262081593405" id="message-747140262081593405">
+                <div class="chatlog__content">
+                    <div class="markdown">After a few minutes Tyche slowly walked in in Kelly’s  peripheral, He Patiently waits till he gets noticed.  
+
+But with him,  carrying a huge bag that looked liked a high quality leather tote bag that has a metallic ends to seal the packaged tight.  Tyche also noticed that delivery guy gave him a menu, he peeked on it and chuckled “oh this page is amusing it has a nose stamp, I wonder why would they give this out?” </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/199230755212099593/a_e479d1e5096abd5da0ab65f978a69ca6.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="RinLockhart#5930" data-user-id="199230755212099593" style="color: rgb(26,188,156)">RinLockhart</span>
+
+
+        <span class="chatlog__timestamp">23-Aug-20 03:56 PM</span>
+
+            <div class="chatlog__message " data-message-id="747227916475039804" id="message-747227916475039804">
+                <div class="chatlog__content">
+                    <div class="markdown">Seeing the whole exchange, Kelly&#39;s eyebrows nearly press onto her eyelids. Her mind is reeling in confusion. <em>Did... did someone order food? HERE?</em> </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/162546384887742465/d780a2a26924d8f9b5a65f07465c97d9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Kinji#9323" data-user-id="162546384887742465" style="color: rgb(233,30,99)">Kinji</span>
+
+
+        <span class="chatlog__timestamp">23-Aug-20 05:25 PM</span>
+
+            <div class="chatlog__message " data-message-id="747250079244484699" id="message-747250079244484699">
+                <div class="chatlog__content">
+                    <div class="markdown">Tyche startled again when Kelly notices him,took a deep breath and tries his best to present himself  this time around
+
+“Hi Ms Kelly!  Since I was hearing your house is having bbq,I just wanted  to contribute for your summer party, I asked a friend what would be the best meat and he chosen this. Here Its a gift from me!”
+
+Tyche slowly pulls out the tote bag “ oh it is quite heavy btw- “ Tyche re position his hands holding the totebag underneat so it would be easier for kelly  to pick it up,  and made a step closer to kelly </div>
+                </div>
+
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="fwend" title="fwend" src="https://cdn.discordapp.com/emojis/716922719731449877.png">
+                                <span class="chatlog__reaction-count">4</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="uwucri" title="uwucri" src="https://cdn.discordapp.com/emojis/716922719849021440.png">
+                                <span class="chatlog__reaction-count">3</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/199230755212099593/a_e479d1e5096abd5da0ab65f978a69ca6.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="RinLockhart#5930" data-user-id="199230755212099593" style="color: rgb(26,188,156)">RinLockhart</span>
+
+
+        <span class="chatlog__timestamp">23-Aug-20 05:28 PM</span>
+
+            <div class="chatlog__message " data-message-id="747250936270815283" id="message-747250936270815283">
+                <div class="chatlog__content">
+                    <div class="markdown">Kelly, gobsmacked, hesitates for a second but takes long strides to Tyche to grab the bag. It has quite some weight to it but she can lift it. &quot;Um... I... thank you.&quot; She&#39;s almost flustered by how kind this guy is. Was this a peace offering? They did just lose two rounds. She clears her throat and nods in appreciation, her cheeks a bit pink. &quot;Thanks, Tyche.&quot; </div>
+                </div>
+
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="uwucry" title="uwucry" src="https://cdn.discordapp.com/emojis/716922719706546266.png">
+                                <span class="chatlog__reaction-count">3</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="&#128150;" title="&#128150;" src="https://twemoji.maxcdn.com/2/72x72/1f496.png">
+                                <span class="chatlog__reaction-count">3</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/162546384887742465/d780a2a26924d8f9b5a65f07465c97d9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Kinji#9323" data-user-id="162546384887742465" style="color: rgb(233,30,99)">Kinji</span>
+
+
+        <span class="chatlog__timestamp">23-Aug-20 06:17 PM</span>
+
+            <div class="chatlog__message " data-message-id="747263158720135169" id="message-747263158720135169">
+                <div class="chatlog__content">
+                    <div class="markdown">A warm feeling strike to tyche’s chest and glowed, it gave tyche a bit of happiness to himself and made him moved (ahh my eyes feels watery? But im happy?what?)  Tyche responded to kelly with a bigger and brighter smile “ You’re welcome Kelly!” 
+
+Tyche made a soft bow to kelly before returning to his team </div>
+                </div>
+
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="fwend" title="fwend" src="https://cdn.discordapp.com/emojis/716922719731449877.png">
+                                <span class="chatlog__reaction-count">4</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/199230755212099593/a_e479d1e5096abd5da0ab65f978a69ca6.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="RinLockhart#5930" data-user-id="199230755212099593" style="color: rgb(26,188,156)">RinLockhart</span>
+
+
+        <span class="chatlog__timestamp">23-Aug-20 06:20 PM</span>
+
+            <div class="chatlog__message " data-message-id="747264121967345686" id="message-747264121967345686">
+                <div class="chatlog__content">
+                    <div class="markdown">The aftermath of such a touching moment left Kelly stranded in her own awkwardness. So the best way she can feel comfortable is yell at the Seiryuu team, &quot;You better show up, too!&quot; Walking back to her team, the bag feels a lot lighter. Kelly has a grin that won&#39;t die down. At this point the match&#39;s outcome is obvious but in the end, eating some good food is the best part. <span class="chatlog__edited-timestamp" title="23-Aug-20 06:31 PM">(edited)</span></div>
+                </div>
+
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="uwucry" title="uwucry" src="https://cdn.discordapp.com/emojis/716922719706546266.png">
+                                <span class="chatlog__reaction-count">3</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="hug" title="hug" src="https://cdn.discordapp.com/emojis/716922719622397963.png">
+                                <span class="chatlog__reaction-count">3</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/218328871731200000/456d9ebd244fcfb0e6066230fa1fe61d.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mintfoxmimi#1012" data-user-id="218328871731200000" style="color: rgb(233,30,99)">HolyEXCALIMINTCup</span>
+
+
+        <span class="chatlog__timestamp">24-Aug-20 06:16 PM</span>
+
+            <div class="chatlog__message " data-message-id="747625402763051040" id="message-747625402763051040">
+                <div class="chatlog__content">
+                    <div class="markdown"><strong>Dom</strong> came back to the now ended match group of both suzaku and seiryuu with  a armful of  ice-tea cans (like the Brisk Lemon Iced Tea Cans i guess &lt;u&lt;)  <em>&quot;ey guys- thought I could use my time out to get something different for everyone before bbqs. the drinks on me, dont know everyones favor so I just go with the easy drinks- &quot;</em>   he said as he passes some drinks to everyone
+
+he also gives a light smack (pat) on Tyches shoulder <em>&quot;&quot;nice throw on the opening there- ha!!   shame that I cannot keep my word on comming back on that- maybe next summer if this party  is doing the same event haha! </em> <span class="chatlog__edited-timestamp" title="24-Aug-20 06:17 PM">(edited)</span></div>
+                </div>
+
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="fwend" title="fwend" src="https://cdn.discordapp.com/emojis/716922719731449877.png">
+                                <span class="chatlog__reaction-count">8</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="uwucry" title="uwucry" src="https://cdn.discordapp.com/emojis/716922719706546266.png">
+                                <span class="chatlog__reaction-count">8</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="hug" title="hug" src="https://cdn.discordapp.com/emojis/716922719622397963.png">
+                                <span class="chatlog__reaction-count">7</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="oof2" title="oof2" src="https://cdn.discordapp.com/emojis/716922719593168928.png">
+                                <span class="chatlog__reaction-count">3</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="f13" title="f13" src="https://cdn.discordapp.com/emojis/728382184720957450.gif">
+                                <span class="chatlog__reaction-count">3</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="&#128150;" title="&#128150;" src="https://twemoji.maxcdn.com/2/72x72/1f496.png">
+                                <span class="chatlog__reaction-count">3</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="&#128149;" title="&#128149;" src="https://twemoji.maxcdn.com/2/72x72/1f495.png">
+                                <span class="chatlog__reaction-count">3</span>
+                            </div>
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="111" title="111" src="https://cdn.discordapp.com/emojis/716922719563939893.gif">
+                                <span class="chatlog__reaction-count">3</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+</div>
+
+<div class="postamble">
+    <div class="postamble__entry">Exported 53 message(s)</div>
+</div>
+
+</body>
+</html>
